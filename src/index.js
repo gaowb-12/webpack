@@ -2,23 +2,21 @@
 import './style.css';
 // import svg from "./assets/商业智能.svg"
 
-import _ from 'lodash';
-import printMe from './print.js';
-
-function component() {
+async function getComponent() {
     const element = document.createElement('div');
-
-    // lodash 在当前 script 中使用 import 引入
+    const { default: _ } = await import('lodash');
     element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-    element.classList.add('hello');
 
-    var btn = document.createElement('button');
-    btn.innerHTML = '点击这里，然后查看 console！';
-    btn.onclick = printMe;
-
-    element.appendChild(btn);
+    element.onclick = function(){
+        import(/* webpackPreload: true */ /* webpackChunkName: "print" */ './print.js')
+        .then(({default: res}) =>{
+            console.log(res)
+            res()
+        })
+    }
 
     return element;
 }
-
- document.body.appendChild(component());
+getComponent().then((component) => {
+    document.body.appendChild(component);
+});
