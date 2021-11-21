@@ -1,18 +1,23 @@
 {
   "name": "webpack",
+  "sideEffects": [
+    "*.css"
+  ],
   "version": "1.0.0",
   "description": "",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node server.js",
-    "build": "rimraf -rf ./dist && webpack",
+    "build:dev": "rimraf -rf ./dist && webpack --config webpack.dev.js",
+    "build": "rimraf -rf ./dist && webpack --config webpack.prod.js",
     "build:watch": "rimraf -rf ./dist && webpack --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/lodash": "^4.14.177",
     "css-loader": "^6.5.1",
     "css-minimizer-webpack-plugin": "^3.1.4",
     "express": "^4.17.1",
@@ -23,12 +28,15 @@
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.64.1",
     "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.5.0",
     "webpack-dev-middleware": "^5.2.2",
-    "webpack-hot-middleware": "^2.25.1"
+    "webpack-dev-server": "^4.5.0",
+    "webpack-hot-middleware": "^2.25.1",
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {
     "lodash": "^4.17.21"
