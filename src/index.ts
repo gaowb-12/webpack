@@ -1,16 +1,18 @@
 /// <reference types="webpack/module" />
-import './style.css';
+import "./public-path"
 
 import * as _ from 'lodash';
-
-// 运行时设置 publicPath
-__webpack_public_path__ = process.env.ASSET_PATH;
-console.log(__webpack_public_path__);
+import './style.css';
 
 function component() {
   const element = document.createElement('div');
 
   element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+
+  const img = new Image();
+  img.src = "./assets/global.png";
+  element.appendChild(img)
+
   return element;
 }
 

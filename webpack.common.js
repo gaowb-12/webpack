@@ -21,7 +21,7 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
-        publicPath: ASSET_PATH,
+        // publicPath: ASSET_PATH,
     },
     optimization:{
         // 只导出exports导出并且使用到的成员（polyfill，它影响全局作用域，并且通常不提供 export），

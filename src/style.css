@@ -1,6 +1,6 @@
 div {
     color: red;
-    /* background: url(./assets/global.png); */
+    background: url(./assets/global.png);
     display: block;
     font-size: 30px;
 }
