@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node server.js",
     "build:dev": "rimraf -rf ./dist && webpack --config webpack.dev.js",
-    "build": "cross-env ASSET_PATH=/test&& rimraf -rf ./dist && webpack --config webpack.prod.js",
+    "build": "cross-env ASSET_PATH=/test/ && rimraf -rf ./dist && webpack --config webpack.prod.js",
     "build:watch": "rimraf -rf ./dist && webpack --watch"
   },
   "keywords": [],

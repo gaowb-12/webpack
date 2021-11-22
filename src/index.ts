@@ -3,6 +3,7 @@ import "./public-path"
 
 import * as _ from 'lodash';
 import './style.css';
+import './test.txt';
 
 function component() {
   const element = document.createElement('div');

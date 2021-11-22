@@ -3,6 +3,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // 尝试使用环境变量，否则使用根路径
 const ASSET_PATH = process.env.ASSET_PATH || '/';
+console.log(process.env.ASSET_PATH)
 
 module.exports = {
     entry: {
@@ -21,7 +22,7 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
-        // publicPath: ASSET_PATH,
+        publicPath: ASSET_PATH,
     },
     optimization:{
         // 只导出exports导出并且使用到的成员（polyfill，它影响全局作用域，并且通常不提供 export），
@@ -58,12 +59,26 @@ module.exports = {
     module:{
         rules:[
             {
+                test: /\.txt$/,
+                use: [{
+                  loader: path.resolve(__dirname, './webpack/testLoader.js'),
+                  options: {
+                    name: 'Alice'
+                  }
+                }]
+            },
+            {
                 test:/\.s?css$/,
                 use:[
                     "style-loader",
                     "css-loader",
                     "sass-loader"
                 ]
+            },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
@@ -77,11 +92,6 @@ module.exports = {
                 use: [
                     'file-loader'
                 ]
-            },
-            {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
             },
         ]
     },
