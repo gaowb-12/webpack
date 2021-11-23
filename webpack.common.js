@@ -56,12 +56,19 @@ module.exports = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
+    // 解析loader的规则
+    resolveLoader:{
+        modules:[
+            "node_modules",
+            path.resolve(__dirname, 'webpack/loaders')
+        ]
+    },
     module:{
         rules:[
             {
                 test: /\.txt$/,
                 use: [{
-                  loader: path.resolve(__dirname, './webpack/testLoader.js'),
+                  loader: 'testLoader',
                   options: {
                     name: 'Alice'
                   }
