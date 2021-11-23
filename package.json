@@ -2,7 +2,8 @@
   "name": "webpack",
   "sideEffects": [
     "*.css",
-    "./src/public-path.ts"
+    "./src/public-path.ts",
+    "./src/test.js"
   ],
   "version": "1.0.0",
   "description": "",
@@ -10,6 +11,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node server.js",
+    "dev": "rimraf -rf ./dist && node --inspect-brk ./node_modules/webpack/bin/webpack.js --config webpack.prod.js",
     "build:dev": "rimraf -rf ./dist && webpack --config webpack.dev.js",
     "build": "cross-env ASSET_PATH=/test/ && rimraf -rf ./dist && webpack --config webpack.prod.js",
     "build:watch": "rimraf -rf ./dist && webpack --watch"
@@ -18,23 +20,28 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
     "@types/lodash": "^4.14.177",
     "cross-env": "^7.0.3",
     "css-loader": "^6.5.1",
     "css-minimizer-webpack-plugin": "^3.1.4",
     "express": "^4.17.1",
     "file-loader": "^6.2.0",
+    "globby": "^11.0.1",
     "html-webpack-plugin": "^5.5.0",
-    "loader-utils": "^3.2.0",
+    "loader-utils": "^2.0.2",
     "mini-css-extract-plugin": "^2.4.5",
     "rimraf": "^3.0.2",
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
     "schema-utils": "^4.0.0",
     "style-loader": "^3.3.1",
+    "tapable": "^2.2.1",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
+    "util": "^0.12.4",
     "webpack": "^5.64.1",
     "webpack-cli": "^4.9.1",
     "webpack-dev-middleware": "^5.2.2",
