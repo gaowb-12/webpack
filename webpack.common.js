@@ -20,8 +20,8 @@ module.exports = {
         }),
         new CopyWebpackPlugin({
             from:"public",
-            to:".",
-            ignore:["index.html"]
+            to:"css",
+            ignore:["**/index.html"]
         })
     ],
     output: {

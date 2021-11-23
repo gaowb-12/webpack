@@ -4,7 +4,6 @@ const path = require("path");
 const webpack = require("webpack");
 // 匹配文件列表
 const globby = require("globby");
-console.log(globby)
 
 const { validate } = require('schema-utils');
 
@@ -53,16 +52,37 @@ class CopyWebpackPlugin {
                     const context = compiler.options.context;
 
                     // 1.读取from中的资源
-                    const absoluteFrom = path.isAbsolute(from) ? from : path.resolve(context, from); // 获取绝对路径
-                    const paths = await globby(absoluteFrom, { ignore });
-                    console.log("-------paths-------",paths)
-
+                    let absoluteFrom = path.isAbsolute(from) ? from : path.resolve(context, from); // 获取绝对路径
+                    absoluteFrom = absoluteFrom.replace(/\\/g, "\/")
                     // 2.过滤掉要忽略的文件
+                    const paths = await globby(absoluteFrom, { ignore });
+
                     // 3.生成webpack格式的资源
+                    const files = await Promise.all(paths.map(async absolutePath=>{
+                        //读取文件
+                        const data = await readFilePromise(absolutePath);
+                        // 获取文件名称
+                        const relativePath = path.basename(absolutePath);
+                        // 跟to表示的目录结合
+                        const filename = path.join(to,relativePath);
+
+                        return {
+                            data,
+                            filename
+                        }
+                    }));
+                    const assets = files.map(file=>{
+                        // 生成webpack格式的数据
+                        const source = new RawSource(file.data);
+                        return {
+                            source,
+                            filename: file.filename
+                        }
+                    })
                     // 4.添加到compilation中，输出出去
-                    // const data = await readFilePromise(path.resolve(__dirname, "test.txt"));
-                    // // 要输出的资源列表中，添加一个test.txt文件
-                    // compilation.assets['a.txt'] = new RawSource(data);
+                    assets.forEach(asset => {
+                        compilation.assets[asset.filename] = asset.source;
+                    });
                     callback();
                 });
             }
